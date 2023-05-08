@@ -18,10 +18,11 @@ final as (
     select
         orders.order_id,
         orders.customer_id,
-        payments.amount
+        sum(payments.amount) as amount
     from
         orders
     join payments using (order_id)
+    group by orders.order_id, orders.customer_id
 
 )
 
