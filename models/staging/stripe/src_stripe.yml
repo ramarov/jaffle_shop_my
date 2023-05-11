@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: stripe
+    database: ramadb
+    schema: jaffle_shop
+    tables:
+      - name: payments
+        loaded_at_field: _etl_loaded_at
+        freshness:
+          warn_after: { count: 12, period: minute }
+          error_after: {count: 24, period: hour }
+
+      
