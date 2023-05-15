@@ -23,7 +23,7 @@ customer_orders as (
     group by 1
 ),
 
-final as (
+final_stg as (
     select
         customers.customer_id,
         customers.first_name,
@@ -37,6 +37,10 @@ final as (
     left join customer_orders using (customer_id)
 )
 
-select * from final
+select * from 
+( 
+    select a.*, CURRENT_TIMESTAMP as _etl_loaded_at 
+    from final_stg a
+) final
 
 

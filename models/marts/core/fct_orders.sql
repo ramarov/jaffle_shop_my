@@ -14,7 +14,7 @@ payments as (
     select * from {{ ref('stg_payments') }}
 ),
 
-final as (
+final_stg as (
     select
         orders.order_id,
         orders.customer_id,
@@ -26,4 +26,8 @@ final as (
 
 )
 
-select * from final
+select * from 
+    ( 
+        select a.*, CURRENT_TIMESTAMP as _etl_loaded_at 
+        from final_stg a
+    ) final
